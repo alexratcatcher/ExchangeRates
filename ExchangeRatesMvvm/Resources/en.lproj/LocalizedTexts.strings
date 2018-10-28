@@ -1,0 +1,27 @@
+/* 
+  LocalizedTexts.strings
+  ExchangeRatesMvvm
+
+  Created by Alexey Berkov on 24/10/2018.
+  Copyright © 2018 Alexey Berkov. All rights reserved.
+*/
+
+
+"RATES_SCREEN_TITLE" = "Exchange Rates";
+"RATES_SCREEN_NO_RATES" = "No rates";
+
+"CURRENCIES_SCREEN_TITLE" = "Currencies";
+"CURRENCIES_SCREEN_SELECTED" = "Selected:";
+"CURRENCIES_SCREEN_OTHERS" = "Others:";
+"CURRENCIES_SCREEN_NO_CURRENCIES" = "No currencies";
+"CURRENCIES_SCREEN_NO_SELECTED" = "No selected currencies";
+
+"ALERT_TITLE_ERROR" = "Error";
+"ALERT_CLOSE_BUTTON" = "Close";
+
+"PULL_TO_REFRESH" = "Pull to refresh";
+
+"NETWORK_ERROR_BAD_REQUEST" = "Failed to create request to: ";
+"NETWORK_ERROR_EMPTY_RESPONSE" = "Empty server response";
+"NETWORK_ERROR_WRONG_RESPONSE" = "Wrong server response";
+"NETWORK_ERROR_UNKNOWN_API_ERROR" = "Unknown API error";
