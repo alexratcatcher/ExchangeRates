@@ -103,7 +103,7 @@ class CurrenciesListViewModel {
     
     // Output
     let sections = BehaviorRelay(value: [CurrenciesSectionViewModel]())
-    let loading = BehaviorRelay(value: false)
+    let loading = BehaviorRelay(value: true)
     let error = PublishRelay<Error>()
     
     private let disposeBag = DisposeBag()
@@ -170,9 +170,6 @@ class CurrenciesListViewModel {
     
     private func updateCurrencies() -> Observable<Void> {
         let flow = Observable.just(())
-            .do(onNext: { _ in
-                self.loading.accept(true)
-            })
             .flatMap({ _ in
                 self.service.loadCurrencies().asObservable()
             })

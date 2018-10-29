@@ -65,7 +65,7 @@ class ExchangeRatesListViewModel {
     
     // Output
     let sections = BehaviorRelay(value: [ExchangeRatesSectionViewModel]())
-    let loading = BehaviorRelay(value: false)
+    let loading = BehaviorRelay(value: true)
     let error = PublishRelay<Error>()
     
     private let disposeBag = DisposeBag()
@@ -149,10 +149,6 @@ class ExchangeRatesListViewModel {
         let minDate = now.addingDays(-self.daysCount)
         
         let flow = self.currenciesRepository.getSelectedCurrencies()
-            .observeOn(MainScheduler.instance)
-            .do(onNext: { _ in
-                self.loading.accept(true)
-            })
             .flatMap({ currencies -> Observable<[Void]> in
                 var updatesTasks = [Observable<Void>]()
                 
