@@ -22,6 +22,7 @@ struct CurrenciesSectionViewModel {
     }
 }
 
+
 extension CurrenciesSectionViewModel: AnimatableSectionModelType {
     typealias Item = CurrencyCellViewModel
     typealias Identity = String
@@ -118,42 +119,46 @@ class CurrenciesListViewModel {
     }
     
     private func bindListUpdate() {
+        let showCachedCurrencies = self.getCachedCurrencies()
+            .do(onNext: { [weak self] data in
+                self?.sections.accept(data)
+            })
+        
+        let updateCurrencies = self.updateCurrencies()
+        
         update
-            .flatMap({ _ in
-                self.getCachedCurrencies()
-            })
-            .do(onNext: { data in
-                self.sections.accept(data)
+            .flatMapLatest({
+                showCachedCurrencies
             })
             .flatMap({ _ in
-                self.updateCurrencies()
+                updateCurrencies
             })
             .flatMap({ _ in
-                self.getCachedCurrencies()
+                showCachedCurrencies
             })
-            .bind(onNext: { data in
-                self.sections.accept(data)
-            })
+            .subscribe()
             .disposed(by: disposeBag)
     }
     
     private func bindItemSelection() {
         selectItem
-            .flatMap({ currencyModel in
-                self.currenciesRepository.markCurrency(withCode: currencyModel.code, selected: !currencyModel.selected)
+            .flatMap({ [currenciesRepository] currencyModel in
+                currenciesRepository.markCurrency(withCode: currencyModel.code, selected: !currencyModel.selected)
             })
-            .bind(onNext: { currency in
-                self.updateCurrency(currency)
+            .bind(onNext: { [weak self] currency in
+                self?.updateCurrency(currency)
             })
             .disposed(by: disposeBag)
     }
     
     private func getCachedCurrencies() -> Observable<[CurrenciesSectionViewModel]> {
-        let flow = Observable.zip(currenciesRepository.getSelectedCurrencies().asObservable(),
-                                  currenciesRepository.getOtherCurrencies().asObservable())
+        let cellPreparation = prepareCellModels
+        
+        let flow = Observable.zip(currenciesRepository.getSelectedCurrencies(),
+                                  currenciesRepository.getOtherCurrencies())
             .map({ selected, others -> ([CurrencyCellViewModel], [CurrencyCellViewModel]) in
-                let selectedCells = self.prepareCellModels(from: selected, selected: true)
-                let otherCells = self.prepareCellModels(from: others, selected: false)
+                let selectedCells = cellPreparation(selected, true)
+                let otherCells = cellPreparation(others, false)
                 return (selectedCells, otherCells)
             })
             .map({ selectedCells, otherCells -> [CurrenciesSectionViewModel] in
@@ -161,27 +166,24 @@ class CurrenciesListViewModel {
                 let othersSection = CurrenciesSectionViewModel(title: LS("CURRENCIES_SCREEN_OTHERS"), items: otherCells)
                 return [selectedSection, othersSection]
             })
-            .catchError({ error in
-                self.error.accept(error)
+            .catchError({ [weak self] error in
+                self?.error.accept(error)
                 return Observable.just([CurrenciesSectionViewModel]())
             })
         return flow
     }
     
     private func updateCurrencies() -> Observable<Void> {
-        let flow = Observable.just(())
-            .flatMap({ _ in
-                self.service.loadCurrencies().asObservable()
+        let flow = service.loadCurrencies()
+            .do(onNext: { [weak self] _ in
+                self?.loading.accept(false)
             })
-            .do(onNext: { _ in
-                self.loading.accept(false)
+            .flatMap({ [currenciesRepository] currencies in
+                currenciesRepository.save(currencies: currencies)
             })
-            .flatMap({ currencies in
-                self.currenciesRepository.save(currencies: currencies).asObservable()
-            })
-            .catchError({ error in
-                self.loading.accept(false)
-                self.error.accept(error)
+            .catchError({ [weak self] error in
+                self?.loading.accept(false)
+                self?.error.accept(error)
                 return Observable.just(())
             })
         return flow

@@ -84,35 +84,42 @@ class ExchangeRatesListViewModel {
     }
     
     private func bindListUpdate() {
+        let deleteUnwantedRates = self.deleteRatesForNonSelectedCurrencies()
+        
+        let showCachedRates = self.getCachedRates()
+            .do(onNext: { [weak self] data in
+                self?.sections.accept(data)
+            })
+        
+        let updateRates = self.updateRates()
+
         update
-            .flatMap({ _ in
-                self.ratesRepository.deleteRatesForNotSelectedCurrencies()
+            .flatMapLatest({
+                deleteUnwantedRates
             })
             .flatMap({ _ in
-                self.getCachedRates()
-            })
-            .do(onNext: { data in
-                self.sections.accept(data)
+                showCachedRates
             })
             .flatMap({ _ in
-                self.updateRates()
+                updateRates
             })
             .flatMap({ _ in
-                self.getCachedRates()
+                showCachedRates
             })
-            .catchError({ error in
-                self.loading.accept(false)
-                self.error.accept(error)
-                return Observable.just([ExchangeRatesSectionViewModel]())
-            })
-            .bind(onNext: { data in
-                self.sections.accept(data)
-            })
+            .subscribe()
             .disposed(by: disposeBag)
     }
     
+    private func deleteRatesForNonSelectedCurrencies() -> Observable<Void> {
+        return ratesRepository.deleteRatesForNotSelectedCurrencies()
+            .catchError({ [weak self] error in
+                self?.error.accept(error)
+                return Observable.just(())
+            })
+    }
+    
     private func getCachedRates() -> Observable<[ExchangeRatesSectionViewModel]> {
-        return self.ratesRepository.getRates()
+        return ratesRepository.getRates()
             .map({ rates in
                 var groupedByCurrency = [Currency : [ExchangeRate]]()
                 for rate in rates {
@@ -136,8 +143,8 @@ class ExchangeRatesListViewModel {
                 sectionModels.sort(by: { $0.title < $1.title })
                 return sectionModels
             })
-            .catchError({ error in
-                self.error.accept(error)
+            .catchError({ [weak self] error in
+                self?.error.accept(error)
                 return Observable.just([ExchangeRatesSectionViewModel]())
             })
     }
@@ -145,29 +152,34 @@ class ExchangeRatesListViewModel {
     private func updateRates() -> Observable<Void> {
         //Fixer.io don't accepts timezone, so for simplicity we will request for rates in range from yesterday to 6 days ago
         //for current day rate we must use another endpoint
-        let now = self.dateProvider.currentDate().addingDays(-1)
-        let minDate = now.addingDays(-self.daysCount)
+        let daysCount = self.daysCount
         
-        let flow = self.currenciesRepository.getSelectedCurrencies()
+        let now = dateProvider.currentDate().addingDays(-1)
+        let minDate = now.addingDays(-daysCount)
+        
+        let updateRatesForDate = self.updateRates(for:at:)
+        
+        let flow = currenciesRepository.getSelectedCurrencies()
             .flatMap({ currencies -> Observable<[Void]> in
                 var updatesTasks = [Observable<Void>]()
                 
-                for index in 0..<self.daysCount {
+                for index in 0..<daysCount {
                     let date = now.addingDays(-index)
-                    let task = self.updateRates(for: currencies, at: date)
+                    let task = updateRatesForDate(currencies, date)
                     updatesTasks.append(task)
                 }
                 
                 return Observable.zip(updatesTasks)
-            }).flatMap({ _ in
-                self.ratesRepository.deleteRates(forDatesBefore: minDate)
             })
-            .do(onNext: { _ in
-                self.loading.accept(false)
+            .flatMap({ [ratesRepository] _ in
+                ratesRepository.deleteRates(forDatesBefore: minDate)
             })
-            .catchError({ error in
-                self.loading.accept(false)
-                self.error.accept(error)
+            .do(onNext: { [weak self] _ in
+                self?.loading.accept(false)
+            })
+            .catchError({ [weak self] error in
+                self?.loading.accept(false)
+                self?.error.accept(error)
                 return Observable.just(())
             })
         return flow
@@ -175,8 +187,8 @@ class ExchangeRatesListViewModel {
     
     private func updateRates(for currencies: [Currency], at date: Date) -> Observable<Void> {
         return self.service.loadExchangeRates(for: currencies, at: date)
-            .flatMap({ rates in
-                self.ratesRepository.saveRates(rates)
+            .flatMap({ [ratesRepository] rates in
+                ratesRepository.saveRates(rates)
             })
     }
 }
