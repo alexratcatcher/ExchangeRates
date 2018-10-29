@@ -149,6 +149,7 @@ class ExchangeRatesListViewModel {
         let minDate = now.addingDays(-self.daysCount)
         
         let flow = self.currenciesRepository.getSelectedCurrencies()
+            .observeOn(MainScheduler.instance)
             .do(onNext: { _ in
                 self.loading.accept(true)
             })

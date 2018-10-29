@@ -32,7 +32,10 @@ class ApplicationCoordinator: Coordinator {
         currenciesService = CurrenciesService(networkingService: fixerService)
         ratesService = ExchangeRatesService(networkingService: fixerService)
         
-        coreDataManager = CoreDataManager()
+        let coreDataManager = CoreDataManager()
+        coreDataManager.prepareStorage()
+        self.coreDataManager = coreDataManager
+        
         let coreDataCurrenciesRepo = CoreDataCurrenciesRepository(dataManager: coreDataManager)
         currenciesRepository = coreDataCurrenciesRepo
         ratesRepository = CoreDataExchangeRatesRepository(dataManager: coreDataManager,

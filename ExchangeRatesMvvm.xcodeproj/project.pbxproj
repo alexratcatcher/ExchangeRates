@@ -28,7 +28,6 @@
 		B4AED2352180835A0082F40A /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AED2342180835A0082F40A /* UIViewController+Alert.swift */; };
 		B4AED237218083860082F40A /* LocalizationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AED236218083860082F40A /* LocalizationUtils.swift */; };
 		B4AED23B218083F40082F40A /* LocalizedTexts.strings in Resources */ = {isa = PBXBuildFile; fileRef = B4AED23D218083F40082F40A /* LocalizedTexts.strings */; };
-		B4AED240218086180082F40A /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AED23F218086180082F40A /* Observable.swift */; };
 		B4AED24221808B5E0082F40A /* CurrenciesListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AED24121808B5E0082F40A /* CurrenciesListCoordinator.swift */; };
 		B4AED24421808C0A0082F40A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AED24321808C0A0082F40A /* Coordinator.swift */; };
 		B4AED24621808C520082F40A /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AED24521808C520082F40A /* ApplicationCoordinator.swift */; };
@@ -104,7 +103,6 @@
 		B4AED236218083860082F40A /* LocalizationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationUtils.swift; sourceTree = "<group>"; };
 		B4AED23C218083F40082F40A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LocalizedTexts.strings; sourceTree = "<group>"; };
 		B4AED23E2180840E0082F40A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LocalizedTexts.strings; sourceTree = "<group>"; };
-		B4AED23F218086180082F40A /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		B4AED24121808B5E0082F40A /* CurrenciesListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesListCoordinator.swift; sourceTree = "<group>"; };
 		B4AED24321808C0A0082F40A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		B4AED24521808C520082F40A /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
@@ -321,7 +319,6 @@
 			isa = PBXGroup;
 			children = (
 				B4AED236218083860082F40A /* LocalizationUtils.swift */,
-				B4AED23F218086180082F40A /* Observable.swift */,
 				B4AED24321808C0A0082F40A /* Coordinator.swift */,
 				B4B990B72181C51B0099930C /* DateProvider.swift */,
 				B4B990B32181BF800099930C /* DateFormatterCache.swift */,
@@ -649,7 +646,6 @@
 				B4AED1E921805E180082F40A /* AppDelegate.swift in Sources */,
 				B4B990B62181C1430099930C /* ExchangeRatesRepository.swift in Sources */,
 				B4AED237218083860082F40A /* LocalizationUtils.swift in Sources */,
-				B4AED240218086180082F40A /* Observable.swift in Sources */,
 				B4AED22221805FC40082F40A /* CurrenciesListViewModel.swift in Sources */,
 				B4FC7015218371030049FD75 /* FixerApiService.swift in Sources */,
 				B4B990B22181BF010099930C /* ExchangeRate.swift in Sources */,

@@ -27,32 +27,28 @@ class CoreDataManager: CoreDataManagerProtocol {
     private let storageName = "ExchangeRatesMvvm.sqlite"
     private let modelName = "ExchangeRatesMvvm"
     
-    private lazy var applicationSupportDirectory: URL = {
-        let urls = FileManager.default.urls(for:  .applicationSupportDirectory, in: .userDomainMask)
-        return urls.last!
-    }()
+    private let persistentStoreCoordinator: NSPersistentStoreCoordinator
     
-    private lazy var databaseLocation: URL = {
-        applicationSupportDirectory.appendingPathComponent(storageName)
-    }()
-    
-    private lazy var managedObjectModel: NSManagedObjectModel = {
+    init() {
         let modelURL = Bundle.main.url(forResource: modelName, withExtension: "momd")!
-        return NSManagedObjectModel(contentsOf: modelURL)!
-    }()
+        let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL)!
+        
+        persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
+    }
     
-    private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
-        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
+    func prepareStorage() {
+        let applicationSupportDirectory = FileManager.default.urls(for:  .applicationSupportDirectory, in: .userDomainMask).last!
+        let databaseLocation = applicationSupportDirectory.appendingPathComponent(storageName)
+        
         do {
             let options = [NSMigratePersistentStoresAutomaticallyOption: true,
                            NSInferMappingModelAutomaticallyOption: true]
-            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: databaseLocation, options: options)
+            try persistentStoreCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: databaseLocation, options: options)
         } catch {
             debugPrint(error)
             abort()//TODO:
         }
-        return coordinator
-    }()
+    }
     
     private lazy var masterContext: NSManagedObjectContext = {
         let coordinator = self.persistentStoreCoordinator
@@ -61,7 +57,6 @@ class CoreDataManager: CoreDataManagerProtocol {
         context.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
         return context
     }()
-    
     
     lazy var mainThreadContext: NSManagedObjectContext = {
         let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
