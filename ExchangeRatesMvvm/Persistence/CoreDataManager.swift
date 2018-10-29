@@ -12,7 +12,7 @@ import CoreData
 
 protocol CoreDataManagerProtocol {
     
-    var mainThreadContext: NSManagedObjectContext { get }
+    var mainThreadContext: NSManagedObjectContext! { get }
     var temporaryContext: NSManagedObjectContext { get }
     
     func performInBackground(_ block: @escaping (NSManagedObjectContext) -> Void)
@@ -27,13 +27,22 @@ class CoreDataManager: CoreDataManagerProtocol {
     private let storageName = "ExchangeRatesMvvm.sqlite"
     private let modelName = "ExchangeRatesMvvm"
     
-    private let persistentStoreCoordinator: NSPersistentStoreCoordinator
+    private let coordinator: NSPersistentStoreCoordinator
+    
+    private(set) var masterContext: NSManagedObjectContext!
+    private(set) var mainThreadContext: NSManagedObjectContext!
+    
+    var temporaryContext: NSManagedObjectContext {
+        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        context.parent = self.mainThreadContext
+        context.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
+        return context
+    }
     
     init() {
         let modelURL = Bundle.main.url(forResource: modelName, withExtension: "momd")!
         let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL)!
-        
-        persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
+        coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
     }
     
     func prepareStorage() {
@@ -43,33 +52,21 @@ class CoreDataManager: CoreDataManagerProtocol {
         do {
             let options = [NSMigratePersistentStoresAutomaticallyOption: true,
                            NSInferMappingModelAutomaticallyOption: true]
-            try persistentStoreCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: databaseLocation, options: options)
+            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: databaseLocation, options: options)
         } catch {
             debugPrint(error)
             abort()//TODO:
         }
-    }
-    
-    private lazy var masterContext: NSManagedObjectContext = {
-        let coordinator = self.persistentStoreCoordinator
-        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        context.persistentStoreCoordinator = coordinator
-        context.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
-        return context
-    }()
-    
-    lazy var mainThreadContext: NSManagedObjectContext = {
-        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        context.parent = self.masterContext
-        context.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
-        return context
-    }()
-    
-    var temporaryContext: NSManagedObjectContext {
-        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        context.parent = self.mainThreadContext
-        context.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
-        return context
+        
+        let masterContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        masterContext.persistentStoreCoordinator = coordinator
+        masterContext.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
+        self.masterContext = masterContext
+        
+        let mainContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        mainContext.parent = self.masterContext
+        mainContext.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
+        self.mainThreadContext = mainContext
     }
     
     func performInBackground(_ block: @escaping (NSManagedObjectContext) -> Void) {
