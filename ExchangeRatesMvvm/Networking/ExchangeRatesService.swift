@@ -17,9 +17,9 @@ protocol ExchangeRatesServiceProtocol {
 
 class ExchangeRatesService: ExchangeRatesServiceProtocol {
     
-    private let service: FixerApiServiceProtocol
+    private let service: FixerApiProtocol
     
-    init(networkingService: FixerApiServiceProtocol) {
+    init(networkingService: FixerApiProtocol) {
         self.service = networkingService
     }
     

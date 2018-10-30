@@ -12,13 +12,13 @@ import CoreData
 
 class ApplicationCoordinator: Coordinator {
     
-    let fixerService: FixerApiServiceProtocol
+    let fixerService: FixerApiProtocol
     let currenciesService: CurrenciesServiceProtocol
     let ratesService: ExchangeRatesServiceProtocol
     
     let coreDataManager: CoreDataManagerProtocol
-    let currenciesRepository: CurrenciesRepositoryProtocol
-    let ratesRepository: ExchangeRatesRepositoryProtocol
+    let currenciesRepository: RxCurrenciesRepositoryProtocol
+    let ratesRepository: RxExchangeRatesRepositoryProtocol
 
     let window: UIWindow
     let rootViewController: UINavigationController
@@ -28,7 +28,7 @@ class ApplicationCoordinator: Coordinator {
         self.window = window
         
         let urlSession = URLSession.shared
-        fixerService = FixerApiService(session: urlSession)
+        fixerService = FixerAPI(session: urlSession)
         currenciesService = CurrenciesService(networkingService: fixerService)
         ratesService = ExchangeRatesService(networkingService: fixerService)
         
@@ -36,10 +36,11 @@ class ApplicationCoordinator: Coordinator {
         coreDataManager.prepareStorage()
         self.coreDataManager = coreDataManager
         
-        let coreDataCurrenciesRepo = CoreDataCurrenciesRepository(dataManager: coreDataManager)
-        currenciesRepository = coreDataCurrenciesRepo
-        ratesRepository = CoreDataExchangeRatesRepository(dataManager: coreDataManager,
-                                                          currenciesRepository: coreDataCurrenciesRepo)
+        let currenciesRepo = CoreDataCurrenciesRepository(dataManager: coreDataManager)
+        currenciesRepository = RxCurrenciesRepository(repository: currenciesRepo)
+
+        let ratesRepo = CoreDataExchangeRatesRepository(dataManager: coreDataManager, currenciesRepository: currenciesRepo)
+        ratesRepository = RxExchangeRatesRepository(repository: ratesRepo)
         
         rootViewController = UINavigationController()
         

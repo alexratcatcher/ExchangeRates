@@ -54,14 +54,13 @@ struct ExchangeRateCellViewModel: IdentifiableType, Equatable {
 class ExchangeRatesListViewModel {
     
     private let service: ExchangeRatesServiceProtocol
-    private let currenciesRepository: CurrenciesRepositoryProtocol
-    private let ratesRepository: ExchangeRatesRepositoryProtocol
-    private let dateProvider: DateProviderProtocol
+    private let currenciesRepository: RxCurrenciesRepositoryProtocol
+    private let ratesRepository: RxExchangeRatesRepositoryProtocol
     
     private let daysCount = 5
     
     // Input
-    let update = BehaviorRelay(value: ())
+    let update = PublishRelay<Void>()
     
     // Output
     let sections = BehaviorRelay(value: [ExchangeRatesSectionViewModel]())
@@ -71,14 +70,12 @@ class ExchangeRatesListViewModel {
     private let disposeBag = DisposeBag()
     
     init(service: ExchangeRatesServiceProtocol,
-         currenciesRepository: CurrenciesRepositoryProtocol,
-         ratesRepository: ExchangeRatesRepositoryProtocol,
-         dateProvider: DateProviderProtocol) {
+         currenciesRepository: RxCurrenciesRepositoryProtocol,
+         ratesRepository: RxExchangeRatesRepositoryProtocol) {
         
         self.service = service
         self.currenciesRepository = currenciesRepository
         self.ratesRepository = ratesRepository
-        self.dateProvider = dateProvider
         
         self.bindListUpdate()
     }
@@ -154,8 +151,8 @@ class ExchangeRatesListViewModel {
         //for current day rate we must use another endpoint
         let daysCount = self.daysCount
         
-        let now = dateProvider.currentDate().addingDays(-1)
-        let minDate = now.addingDays(-daysCount)
+        let yesterday = Date().dayStart().addingDays(-1)
+        let minDate = yesterday.addingDays(-daysCount)
         
         let updateRatesForDate = self.updateRates(for:at:)
         
@@ -164,7 +161,7 @@ class ExchangeRatesListViewModel {
                 var updatesTasks = [Observable<Void>]()
                 
                 for index in 0..<daysCount {
-                    let date = now.addingDays(-index)
+                    let date = yesterday.addingDays(-index)
                     let task = updateRatesForDate(currencies, date)
                     updatesTasks.append(task)
                 }

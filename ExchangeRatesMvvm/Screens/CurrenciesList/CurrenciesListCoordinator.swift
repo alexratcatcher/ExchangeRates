@@ -13,11 +13,11 @@ class CurrenciesListCoordinator: Coordinator {
     
     private let navigationRoot: UINavigationController
     private let currenciesService: CurrenciesServiceProtocol
-    private let currenciesRepository: CurrenciesRepositoryProtocol
+    private let currenciesRepository: RxCurrenciesRepositoryProtocol
     
     init(navigationRoot: UINavigationController,
          service: CurrenciesServiceProtocol,
-         currenciesRepository: CurrenciesRepositoryProtocol) {
+         currenciesRepository: RxCurrenciesRepositoryProtocol) {
         
         self.navigationRoot = navigationRoot
         self.currenciesService = service
