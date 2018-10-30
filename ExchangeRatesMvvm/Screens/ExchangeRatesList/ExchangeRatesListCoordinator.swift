@@ -16,14 +16,14 @@ class ExchangeRatesListCoordinator: Coordinator {
     private let currenciesService: CurrenciesServiceProtocol
     private let ratesService: ExchangeRatesServiceProtocol
     
-    private let currenciesRepository: CurrenciesRepositoryProtocol
-    private let ratesRepository: ExchangeRatesRepositoryProtocol
+    private let currenciesRepository: RxCurrenciesRepositoryProtocol
+    private let ratesRepository: RxExchangeRatesRepositoryProtocol
     
     init(navigationRoot: UINavigationController,
          currenciesService: CurrenciesServiceProtocol,
          ratesService: ExchangeRatesServiceProtocol,
-         currenciesRepository: CurrenciesRepositoryProtocol,
-         ratesRepository: ExchangeRatesRepositoryProtocol) {
+         currenciesRepository: RxCurrenciesRepositoryProtocol,
+         ratesRepository: RxExchangeRatesRepositoryProtocol) {
         
         self.navigationRoot = navigationRoot
         

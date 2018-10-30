@@ -54,13 +54,13 @@ struct ExchangeRateCellViewModel: IdentifiableType, Equatable {
 class ExchangeRatesListViewModel {
     
     private let service: ExchangeRatesServiceProtocol
-    private let currenciesRepository: CurrenciesRepositoryProtocol
-    private let ratesRepository: ExchangeRatesRepositoryProtocol
+    private let currenciesRepository: RxCurrenciesRepositoryProtocol
+    private let ratesRepository: RxExchangeRatesRepositoryProtocol
     
     private let daysCount = 5
     
     // Input
-    let update = BehaviorRelay(value: ())
+    let update = PublishRelay<Void>()
     
     // Output
     let sections = BehaviorRelay(value: [ExchangeRatesSectionViewModel]())
@@ -70,8 +70,8 @@ class ExchangeRatesListViewModel {
     private let disposeBag = DisposeBag()
     
     init(service: ExchangeRatesServiceProtocol,
-         currenciesRepository: CurrenciesRepositoryProtocol,
-         ratesRepository: ExchangeRatesRepositoryProtocol) {
+         currenciesRepository: RxCurrenciesRepositoryProtocol,
+         ratesRepository: RxExchangeRatesRepositoryProtocol) {
         
         self.service = service
         self.currenciesRepository = currenciesRepository

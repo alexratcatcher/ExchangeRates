@@ -96,10 +96,10 @@ fileprivate extension CurrencyViewModel {
 class CurrenciesListViewModel {
     
     private let service: CurrenciesServiceProtocol
-    private let currenciesRepository: CurrenciesRepositoryProtocol
+    private let currenciesRepository: RxCurrenciesRepositoryProtocol
     
     // Input
-    let update = BehaviorRelay(value: ())
+    let update = PublishRelay<Void>()
     let selectItem = PublishRelay<CurrencyViewModel>()
     
     // Output
@@ -110,7 +110,7 @@ class CurrenciesListViewModel {
     private let disposeBag = DisposeBag()
 
     init(service: CurrenciesServiceProtocol,
-         currenciesRepository: CurrenciesRepositoryProtocol) {
+         currenciesRepository: RxCurrenciesRepositoryProtocol) {
         self.service = service
         self.currenciesRepository = currenciesRepository
         
