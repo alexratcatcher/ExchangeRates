@@ -52,7 +52,7 @@
 		B4EA0F5421885CF300F11523 /* Observable+WrapFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EA0F5321885CF300F11523 /* Observable+WrapFunctions.swift */; };
 		B4EA0F5721885FF500F11523 /* RxExchangeRatesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EA0F5621885FF500F11523 /* RxExchangeRatesRepository.swift */; };
 		B4FC701321836DAC0049FD75 /* FixerApiCommons.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FC701221836DAC0049FD75 /* FixerApiCommons.swift */; };
-		B4FC7015218371030049FD75 /* FixerApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FC7014218371030049FD75 /* FixerApiService.swift */; };
+		B4FC7015218371030049FD75 /* FixerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FC7014218371030049FD75 /* FixerAPI.swift */; };
 		B4FC701721837EE00049FD75 /* Date+Days.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FC701621837EE00049FD75 /* Date+Days.swift */; };
 		B901A415CFE32A7591E16CA8 /* Pods_ExchangeRatesMvvmUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43ABAE424EDE6DF581381A65 /* Pods_ExchangeRatesMvvmUITests.framework */; };
 /* End PBXBuildFile section */
@@ -129,7 +129,7 @@
 		B4EA0F5321885CF300F11523 /* Observable+WrapFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+WrapFunctions.swift"; sourceTree = "<group>"; };
 		B4EA0F5621885FF500F11523 /* RxExchangeRatesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxExchangeRatesRepository.swift; sourceTree = "<group>"; };
 		B4FC701221836DAC0049FD75 /* FixerApiCommons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixerApiCommons.swift; sourceTree = "<group>"; };
-		B4FC7014218371030049FD75 /* FixerApiService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixerApiService.swift; sourceTree = "<group>"; };
+		B4FC7014218371030049FD75 /* FixerAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixerAPI.swift; sourceTree = "<group>"; };
 		B4FC701621837EE00049FD75 /* Date+Days.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Days.swift"; sourceTree = "<group>"; };
 		BF67010764B92D24A9EFD734 /* Pods_ExchangeRatesMvvmTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExchangeRatesMvvmTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF1E9C11F064ED9BF11E253A /* Pods-ExchangeRatesMvvmTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExchangeRatesMvvmTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ExchangeRatesMvvmTests/Pods-ExchangeRatesMvvmTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -301,7 +301,7 @@
 			children = (
 				B4AED226218067B10082F40A /* NetworkingError.swift */,
 				B4FC701221836DAC0049FD75 /* FixerApiCommons.swift */,
-				B4FC7014218371030049FD75 /* FixerApiService.swift */,
+				B4FC7014218371030049FD75 /* FixerAPI.swift */,
 				B4AED224218064910082F40A /* CurrenciesService.swift */,
 				B4B990AF2181BE240099930C /* ExchangeRatesService.swift */,
 			);
@@ -671,7 +671,7 @@
 				B4B990B62181C1430099930C /* ExchangeRatesRepository.swift in Sources */,
 				B4AED237218083860082F40A /* LocalizationUtils.swift in Sources */,
 				B4AED22221805FC40082F40A /* CurrenciesListViewModel.swift in Sources */,
-				B4FC7015218371030049FD75 /* FixerApiService.swift in Sources */,
+				B4FC7015218371030049FD75 /* FixerAPI.swift in Sources */,
 				B4B990B22181BF010099930C /* ExchangeRate.swift in Sources */,
 				B4AED24C21809BE20082F40A /* ReusableCell.swift in Sources */,
 			);

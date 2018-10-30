@@ -12,7 +12,7 @@ import CoreData
 
 class ApplicationCoordinator: Coordinator {
     
-    let fixerService: FixerApiServiceProtocol
+    let fixerService: FixerApiProtocol
     let currenciesService: CurrenciesServiceProtocol
     let ratesService: ExchangeRatesServiceProtocol
     
@@ -28,7 +28,7 @@ class ApplicationCoordinator: Coordinator {
         self.window = window
         
         let urlSession = URLSession.shared
-        fixerService = FixerApiService(session: urlSession)
+        fixerService = FixerAPI(session: urlSession)
         currenciesService = CurrenciesService(networkingService: fixerService)
         ratesService = ExchangeRatesService(networkingService: fixerService)
         

@@ -1,5 +1,5 @@
 //
-//  NetworkingService.swift
+//  FixerAPI.swift
 //  ExchangeRatesMvvm
 //
 //  Created by Alexey Berkov on 26/10/2018.
@@ -10,12 +10,12 @@ import Foundation
 import RxSwift
 
 
-protocol FixerApiServiceProtocol {
+protocol FixerApiProtocol {
     func perform<T:FixerApiResponse>(request: FixerApiRequest, decodeTo type: T.Type) -> Observable<T>
 }
 
 
-class FixerApiService : FixerApiServiceProtocol {
+class FixerAPI : FixerApiProtocol {
     
     private let urlSession: URLSession
     
