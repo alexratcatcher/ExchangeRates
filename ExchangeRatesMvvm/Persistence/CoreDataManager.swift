@@ -45,18 +45,15 @@ class CoreDataManager: CoreDataManagerProtocol {
         coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
     }
     
-    func prepareStorage() {
+    func prepareStorage() throws {
         let applicationSupportDirectory = FileManager.default.urls(for:  .applicationSupportDirectory, in: .userDomainMask).last!
         let databaseLocation = applicationSupportDirectory.appendingPathComponent(storageName)
         
-        do {
-            let options = [NSMigratePersistentStoresAutomaticallyOption: true,
-                           NSInferMappingModelAutomaticallyOption: true]
-            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: databaseLocation, options: options)
-        } catch {
-            debugPrint(error)
-            abort()//TODO:
-        }
+
+        let options = [NSMigratePersistentStoresAutomaticallyOption: true,
+                       NSInferMappingModelAutomaticallyOption: true]
+        try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: databaseLocation, options: options)
+
         
         let masterContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         masterContext.persistentStoreCoordinator = coordinator

@@ -16,7 +16,7 @@ class ApplicationCoordinator: Coordinator {
     let currenciesService: CurrenciesServiceProtocol
     let ratesService: ExchangeRatesServiceProtocol
     
-    let coreDataManager: CoreDataManagerProtocol
+    let coreDataManager: CoreDataManagerProtocol?
     let currenciesRepository: RxCurrenciesRepositoryProtocol
     let ratesRepository: RxExchangeRatesRepositoryProtocol
 
@@ -32,16 +32,24 @@ class ApplicationCoordinator: Coordinator {
         currenciesService = CurrenciesService(networkingService: fixerService)
         ratesService = ExchangeRatesService(networkingService: fixerService)
         
-        let coreDataManager = CoreDataManager()
-        coreDataManager.prepareStorage()
-        self.coreDataManager = coreDataManager
-        
-        let currenciesRepo = CoreDataCurrenciesRepository(dataManager: coreDataManager)
-        currenciesRepository = RxCurrenciesRepository(repository: currenciesRepo)
+        do {
+            let coreDataManager = CoreDataManager()
+            try coreDataManager.prepareStorage()
+            self.coreDataManager = coreDataManager
 
-        let ratesRepo = CoreDataExchangeRatesRepository(dataManager: coreDataManager, currenciesRepository: currenciesRepo)
-        ratesRepository = RxExchangeRatesRepository(repository: ratesRepo)
-        
+            let currenciesRepo = CoreDataCurrenciesRepository(dataManager: coreDataManager)
+            currenciesRepository = RxCurrenciesRepository(repository: currenciesRepo)
+
+            let ratesRepo = CoreDataExchangeRatesRepository(dataManager: coreDataManager, currenciesRepository: currenciesRepo)
+            ratesRepository = RxExchangeRatesRepository(repository: ratesRepo)
+        }
+        catch {
+            //TODO: Remove InMemory Repos and show error
+            self.coreDataManager = nil
+            currenciesRepository = RxCurrenciesRepository(repository: InMemoryCurrenciesRepository())
+            ratesRepository = RxExchangeRatesRepository(repository: InMemoryExchangeRatesRepository())
+        }
+
         rootViewController = UINavigationController()
         
         ratesCoordinator = ExchangeRatesListCoordinator(navigationRoot: rootViewController,

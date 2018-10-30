@@ -127,19 +127,13 @@ class CurrenciesListViewModel {
         let updateCurrencies = self.updateCurrencies()
         
         update
-            .do(onNext: { _ in
-                print("Update triggered")
+            .flatMapLatest({ _ in
+                showCachedCurrencies
             })
-            .flatMapLatest({ () -> Observable<[CurrenciesSectionViewModel]> in
-                print("Show cached first")
-                return showCachedCurrencies
+            .flatMap({ _ in
+                updateCurrencies
             })
-            .flatMap({ _ -> Observable<Void> in
-                print("Update")
-                return updateCurrencies
-            })
-            .flatMap({ _ -> Observable<[CurrenciesSectionViewModel]> in
-                print("Show cached second")
+            .flatMap({ _ in
                 return showCachedCurrencies
             })
             .subscribe()
@@ -209,7 +203,10 @@ class CurrenciesListViewModel {
         }
     }
     
-    private func updateCurrency(_ currency: Currency) { //some difficult logic for our immutable structures and arrays
+    private func updateCurrency(_ currency: Currency) {
+        //some difficult logic for our immutable structures and arrays
+        //I want to update cell model in place without reload all table
+        
         let sections = self.sections.value
         
         var updatedSections = [CurrenciesSectionViewModel]()

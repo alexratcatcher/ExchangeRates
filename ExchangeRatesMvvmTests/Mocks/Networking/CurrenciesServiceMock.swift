@@ -19,12 +19,17 @@ class CurrenciesServiceMock: CurrenciesServiceProtocol {
     var loadCurrenciesResultToReturn = [Currency]()
     var loadCurrenciesErrorToReturn: Error?
     func loadCurrencies() -> Observable<[Currency]> {
-        loadCurrenciesDidCalled += 1
-        
-        if let error = loadCurrenciesErrorToReturn {
-            return Observable.error(error)
-        }
-        
-        return Observable.just(loadCurrenciesResultToReturn)
+        return Observable.create({ observer in
+            self.loadCurrenciesDidCalled += 1
+            
+            if let error = self.loadCurrenciesErrorToReturn {
+                observer.onError(error)
+            }
+            
+            observer.onNext(self.loadCurrenciesResultToReturn)
+            observer.onCompleted()
+            
+            return Disposables.create()
+        })
     }
 }

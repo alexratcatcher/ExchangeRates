@@ -13,88 +13,71 @@ import RxSwift
 @testable import ExchangeRatesMvvm
 
 
-class ExchangeRatesRepositoryMock: ExchangeRatesRepositoryProtocol {    
+class ExchangeRatesRepositoryMock: ExchangeRatesRepositoryProtocol {
     
     var getRatesDidCalled = 0
     var getRatesResultToReturn = [ExchangeRate]()
-    func getRates() -> Observable<[ExchangeRate]> {
+    var getRatesErrorToReturn: Error?
+    func getRates(completion: (([ExchangeRate], Error?) -> ())?) {
+        
         getRatesDidCalled += 1
-        return Observable.just(getRatesResultToReturn)
+        
+        completion?(getRatesResultToReturn, getRatesErrorToReturn)
     }
     
     var saveRatesDidCalled = 0
     var saveRatesArgument: [ExchangeRate]?
     var saveRatesErrorToReturn: Error?
-    func saveRates(_ rates: [ExchangeRate]) -> Observable<Void> {
+    func saveRates(_ rates: [ExchangeRate], completion: ErrorCallback?) {
         getRatesResultToReturn = rates
         
         saveRatesDidCalled += 1
         saveRatesArgument = rates
         
-        if let error = saveRatesErrorToReturn {
-            return Observable.error(error)
-        }
-        
-        return Observable.just(())
+        completion?(saveRatesErrorToReturn)
     }
     
     var deleteRatesForDatesBeforeDidCalled = 0
     var deleteRatesForDatesBeforeArgument: Date?
     var deleteRatesForDatesBeforeErrorToReturn: Error?
-    func deleteRates(forDatesBefore date: Date) -> Observable<Void> {
+    func deleteRates(forDatesBefore date: Date, completion: ErrorCallback?) {
         getRatesResultToReturn = getRatesResultToReturn.filter({ $0.date > date })
         
         deleteRatesForDatesBeforeDidCalled += 1
         deleteRatesForDatesBeforeArgument = date
         
-        if let error = deleteRatesForDatesBeforeErrorToReturn {
-            return Observable.error(error)
-        }
-        
-        return Observable.just(())
+        completion?(deleteRatesForDatesBeforeErrorToReturn)
     }
     
     var deleteRatesForCurrencyDidCalled = 0
     var deleteRatesForCurrencyArgument: Currency?
     var deleteRatesForCurrencyErrorToReturn: Error?
-    func deleteRates(for currency: Currency) -> Observable<Void> {
+    func deleteRates(for currency: Currency, completion: ErrorCallback?) {
         getRatesResultToReturn = getRatesResultToReturn.filter({ $0.currency != currency })
         
         deleteRatesForCurrencyDidCalled += 1
         deleteRatesForCurrencyArgument = currency
         
-        if let error = deleteRatesForCurrencyErrorToReturn {
-            return Observable.error(error)
-        }
-        
-        return Observable.just(())
+        completion?(deleteRatesForCurrencyErrorToReturn)
     }
     
     var deleteRatesForNotSelectedCurrenciesDidCalled = 0
     var deleteRatesForNotSelectedCurrenciesErrorToReturn: Error?
-    func deleteRatesForNotSelectedCurrencies() -> Observable<Void> {
+    func deleteRatesForNotSelectedCurrencies(completion: ErrorCallback?) {
         getRatesResultToReturn = getRatesResultToReturn.filter({ $0.currency.selected })
         
         deleteRatesForNotSelectedCurrenciesDidCalled += 1
         
-        if let error = deleteRatesForNotSelectedCurrenciesErrorToReturn {
-            return Observable.error(error)
-        }
-        
-        return Observable.just(())
+        completion?(deleteRatesForCurrencyErrorToReturn)
     }
     
     var deleteAllRatesDidCalled = 0
     var deleteAllRatesErrorToReturn: Error?
-    func deleteAllRates() -> Observable<Void> {
+    func deleteAllRates(completion: ErrorCallback?) {
         getRatesResultToReturn = [ExchangeRate]()
         
         deleteAllRatesDidCalled += 1
         
-        if let error = deleteAllRatesErrorToReturn {
-            return Observable.error(error)
-        }
-        
-        return Observable.just(())
+        completion?(deleteAllRatesErrorToReturn)
     }
 }

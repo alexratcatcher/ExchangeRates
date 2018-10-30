@@ -213,8 +213,8 @@
 		B43A37D021884CA500CBB569 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				B43A37D121884CA500CBB569 /* ExchangeRatesServiceMock.swift */,
 				B43A37D221884CA500CBB569 /* CurrenciesServiceMock.swift */,
+				B43A37D121884CA500CBB569 /* ExchangeRatesServiceMock.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -222,8 +222,8 @@
 		B43A37D321884CA500CBB569 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
-				B43A37D421884CA500CBB569 /* ExchangeRatesRepositoryMock.swift */,
 				B43A37D521884CA500CBB569 /* CurrenciesRepositoryMock.swift */,
+				B43A37D421884CA500CBB569 /* ExchangeRatesRepositoryMock.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -231,8 +231,8 @@
 		B43A37D621884CA500CBB569 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				B43A37D721884CA500CBB569 /* ExchangeRatesList */,
 				B43A37D921884CA500CBB569 /* CurrenciesList */,
+				B43A37D721884CA500CBB569 /* ExchangeRatesList */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
