@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		55D0ED0A425D14A7083361BB /* Pods_ExchangeRatesMvvm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96EC5F96FA1172C93B978CFE /* Pods_ExchangeRatesMvvm.framework */; };
 		8ABE5B2F56F95BF82CA2B77F /* Pods_ExchangeRatesMvvmTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF67010764B92D24A9EFD734 /* Pods_ExchangeRatesMvvmTests.framework */; };
+		B43A37DB21884CA500CBB569 /* ExchangeRatesServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43A37D121884CA500CBB569 /* ExchangeRatesServiceMock.swift */; };
+		B43A37DC21884CA500CBB569 /* CurrenciesServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43A37D221884CA500CBB569 /* CurrenciesServiceMock.swift */; };
+		B43A37DD21884CA500CBB569 /* ExchangeRatesRepositoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43A37D421884CA500CBB569 /* ExchangeRatesRepositoryMock.swift */; };
+		B43A37DE21884CA500CBB569 /* CurrenciesRepositoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43A37D521884CA500CBB569 /* CurrenciesRepositoryMock.swift */; };
+		B43A37DF21884CA500CBB569 /* ExchangeRatesListViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43A37D821884CA500CBB569 /* ExchangeRatesListViewModelTest.swift */; };
+		B43A37E021884CA500CBB569 /* CurrenciesListViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43A37DA21884CA500CBB569 /* CurrenciesListViewModelTest.swift */; };
 		B45DD66E218326B80078D10C /* StoryboardInstantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45DD66D218326B80078D10C /* StoryboardInstantiable.swift */; };
 		B45DD670218336F20078D10C /* RefreshControlContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45DD66F218336F20078D10C /* RefreshControlContainer.swift */; };
 		B467F2E92180A42900EA016B /* CurrenciesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B467F2E82180A42900EA016B /* CurrenciesRepository.swift */; };
@@ -77,6 +83,12 @@
 		43ABAE424EDE6DF581381A65 /* Pods_ExchangeRatesMvvmUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExchangeRatesMvvmUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		969E73A141764A1AD2E42CB6 /* Pods-ExchangeRatesMvvm.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExchangeRatesMvvm.release.xcconfig"; path = "Pods/Target Support Files/Pods-ExchangeRatesMvvm/Pods-ExchangeRatesMvvm.release.xcconfig"; sourceTree = "<group>"; };
 		96EC5F96FA1172C93B978CFE /* Pods_ExchangeRatesMvvm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExchangeRatesMvvm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B43A37D121884CA500CBB569 /* ExchangeRatesServiceMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExchangeRatesServiceMock.swift; sourceTree = "<group>"; };
+		B43A37D221884CA500CBB569 /* CurrenciesServiceMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrenciesServiceMock.swift; sourceTree = "<group>"; };
+		B43A37D421884CA500CBB569 /* ExchangeRatesRepositoryMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExchangeRatesRepositoryMock.swift; sourceTree = "<group>"; };
+		B43A37D521884CA500CBB569 /* CurrenciesRepositoryMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrenciesRepositoryMock.swift; sourceTree = "<group>"; };
+		B43A37D821884CA500CBB569 /* ExchangeRatesListViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExchangeRatesListViewModelTest.swift; sourceTree = "<group>"; };
+		B43A37DA21884CA500CBB569 /* CurrenciesListViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrenciesListViewModelTest.swift; sourceTree = "<group>"; };
 		B45DD66D218326B80078D10C /* StoryboardInstantiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardInstantiable.swift; sourceTree = "<group>"; };
 		B45DD66F218336F20078D10C /* RefreshControlContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshControlContainer.swift; sourceTree = "<group>"; };
 		B467F2E82180A42900EA016B /* CurrenciesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesRepository.swift; sourceTree = "<group>"; };
@@ -185,6 +197,58 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		B43A37CF21884CA500CBB569 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				B43A37D021884CA500CBB569 /* Networking */,
+				B43A37D321884CA500CBB569 /* Persistence */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		B43A37D021884CA500CBB569 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				B43A37D121884CA500CBB569 /* ExchangeRatesServiceMock.swift */,
+				B43A37D221884CA500CBB569 /* CurrenciesServiceMock.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		B43A37D321884CA500CBB569 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				B43A37D421884CA500CBB569 /* ExchangeRatesRepositoryMock.swift */,
+				B43A37D521884CA500CBB569 /* CurrenciesRepositoryMock.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		B43A37D621884CA500CBB569 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				B43A37D721884CA500CBB569 /* ExchangeRatesList */,
+				B43A37D921884CA500CBB569 /* CurrenciesList */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		B43A37D721884CA500CBB569 /* ExchangeRatesList */ = {
+			isa = PBXGroup;
+			children = (
+				B43A37D821884CA500CBB569 /* ExchangeRatesListViewModelTest.swift */,
+			);
+			path = ExchangeRatesList;
+			sourceTree = "<group>";
+		};
+		B43A37D921884CA500CBB569 /* CurrenciesList */ = {
+			isa = PBXGroup;
+			children = (
+				B43A37DA21884CA500CBB569 /* CurrenciesListViewModelTest.swift */,
+			);
+			path = CurrenciesList;
+			sourceTree = "<group>";
+		};
 		B45DD671218340B10078D10C /* UIUtils */ = {
 			isa = PBXGroup;
 			children = (
@@ -248,6 +312,8 @@
 		B4AED20121805E190082F40A /* ExchangeRatesMvvmTests */ = {
 			isa = PBXGroup;
 			children = (
+				B43A37CF21884CA500CBB569 /* Mocks */,
+				B43A37D621884CA500CBB569 /* Screens */,
 				B4AED20421805E190082F40A /* Info.plist */,
 			);
 			path = ExchangeRatesMvvmTests;
@@ -408,6 +474,7 @@
 				B4AED1FA21805E190082F40A /* Sources */,
 				B4AED1FB21805E190082F40A /* Frameworks */,
 				B4AED1FC21805E190082F40A /* Resources */,
+				8083B439307C04E07CCA7169 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -453,6 +520,7 @@
 					};
 					B4AED1FD21805E190082F40A = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1000;
 						TestTargetID = B4AED1E421805E180082F40A;
 					};
 					B4AED20821805E190082F40A = {
@@ -559,6 +627,32 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		8083B439307C04E07CCA7169 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ExchangeRatesMvvmTests/Pods-ExchangeRatesMvvmTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/RxBlocking/RxBlocking.framework",
+				"${BUILT_PRODUCTS_DIR}/RxTest/RxTest.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxBlocking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxTest.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ExchangeRatesMvvmTests/Pods-ExchangeRatesMvvmTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		C7D5D85535C6C31FE4D87772 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -657,6 +751,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B43A37DC21884CA500CBB569 /* CurrenciesServiceMock.swift in Sources */,
+				B43A37DD21884CA500CBB569 /* ExchangeRatesRepositoryMock.swift in Sources */,
+				B43A37DE21884CA500CBB569 /* CurrenciesRepositoryMock.swift in Sources */,
+				B43A37E021884CA500CBB569 /* CurrenciesListViewModelTest.swift in Sources */,
+				B43A37DB21884CA500CBB569 /* ExchangeRatesServiceMock.swift in Sources */,
+				B43A37DF21884CA500CBB569 /* ExchangeRatesListViewModelTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -870,6 +970,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 63VRR5Z9XX;
 				INFOPLIST_FILE = ExchangeRatesMvvmTests/Info.plist;
@@ -880,6 +981,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ratcatcher.ru.ExchangeRatesMvvmTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ExchangeRatesMvvm.app/ExchangeRatesMvvm";
@@ -892,6 +994,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 63VRR5Z9XX;
 				INFOPLIST_FILE = ExchangeRatesMvvmTests/Info.plist;

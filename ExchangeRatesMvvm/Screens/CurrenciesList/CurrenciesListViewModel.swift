@@ -99,7 +99,7 @@ class CurrenciesListViewModel {
     private let currenciesRepository: CurrenciesRepositoryProtocol
     
     // Input
-    let update = BehaviorRelay(value: ())
+    let update = PublishRelay<Void>()
     let selectItem = PublishRelay<CurrencyViewModel>()
     
     // Output
@@ -127,14 +127,20 @@ class CurrenciesListViewModel {
         let updateCurrencies = self.updateCurrencies()
         
         update
-            .flatMapLatest({
-                showCachedCurrencies
+            .do(onNext: { _ in
+                print("Update triggered")
             })
-            .flatMap({ _ in
-                updateCurrencies
+            .flatMapLatest({ () -> Observable<[CurrenciesSectionViewModel]> in
+                print("Show cached first")
+                return showCachedCurrencies
             })
-            .flatMap({ _ in
-                showCachedCurrencies
+            .flatMap({ _ -> Observable<Void> in
+                print("Update")
+                return updateCurrencies
+            })
+            .flatMap({ _ -> Observable<[CurrenciesSectionViewModel]> in
+                print("Show cached second")
+                return showCachedCurrencies
             })
             .subscribe()
             .disposed(by: disposeBag)
