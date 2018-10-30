@@ -56,7 +56,6 @@ class ExchangeRatesListViewModel {
     private let service: ExchangeRatesServiceProtocol
     private let currenciesRepository: CurrenciesRepositoryProtocol
     private let ratesRepository: ExchangeRatesRepositoryProtocol
-    private let dateProvider: DateProviderProtocol
     
     private let daysCount = 5
     
@@ -72,13 +71,11 @@ class ExchangeRatesListViewModel {
     
     init(service: ExchangeRatesServiceProtocol,
          currenciesRepository: CurrenciesRepositoryProtocol,
-         ratesRepository: ExchangeRatesRepositoryProtocol,
-         dateProvider: DateProviderProtocol) {
+         ratesRepository: ExchangeRatesRepositoryProtocol) {
         
         self.service = service
         self.currenciesRepository = currenciesRepository
         self.ratesRepository = ratesRepository
-        self.dateProvider = dateProvider
         
         self.bindListUpdate()
     }
@@ -154,8 +151,8 @@ class ExchangeRatesListViewModel {
         //for current day rate we must use another endpoint
         let daysCount = self.daysCount
         
-        let now = dateProvider.currentDate().addingDays(-1)
-        let minDate = now.addingDays(-daysCount)
+        let yesterday = Date().dayStart().addingDays(-1)
+        let minDate = yesterday.addingDays(-daysCount)
         
         let updateRatesForDate = self.updateRates(for:at:)
         
@@ -164,7 +161,7 @@ class ExchangeRatesListViewModel {
                 var updatesTasks = [Observable<Void>]()
                 
                 for index in 0..<daysCount {
-                    let date = now.addingDays(-index)
+                    let date = yesterday.addingDays(-index)
                     let task = updateRatesForDate(currencies, date)
                     updatesTasks.append(task)
                 }

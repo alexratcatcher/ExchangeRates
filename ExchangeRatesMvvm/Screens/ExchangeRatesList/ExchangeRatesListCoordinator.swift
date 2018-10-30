@@ -19,8 +19,6 @@ class ExchangeRatesListCoordinator: Coordinator {
     private let currenciesRepository: CurrenciesRepositoryProtocol
     private let ratesRepository: ExchangeRatesRepositoryProtocol
     
-    private let dateProvider: DateProviderProtocol
-    
     init(navigationRoot: UINavigationController,
          currenciesService: CurrenciesServiceProtocol,
          ratesService: ExchangeRatesServiceProtocol,
@@ -34,8 +32,6 @@ class ExchangeRatesListCoordinator: Coordinator {
         
         self.currenciesRepository = currenciesRepository
         self.ratesRepository = ratesRepository
-        
-        self.dateProvider = DateProvider()
     }
     
     func start() {
@@ -44,8 +40,7 @@ class ExchangeRatesListCoordinator: Coordinator {
         
         let viewModel = ExchangeRatesListViewModel(service: ratesService,
                                                    currenciesRepository: currenciesRepository,
-                                                   ratesRepository: ratesRepository,
-                                                   dateProvider: dateProvider)
+                                                   ratesRepository: ratesRepository)
         ratesVC.viewModel = viewModel
         
         ratesVC.onSettingsPressedBlock = {

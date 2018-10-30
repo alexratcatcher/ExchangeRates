@@ -39,7 +39,6 @@
 		B4B990B22181BF010099930C /* ExchangeRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B990B12181BF010099930C /* ExchangeRate.swift */; };
 		B4B990B42181BF800099930C /* DateFormatterCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B990B32181BF800099930C /* DateFormatterCache.swift */; };
 		B4B990B62181C1430099930C /* ExchangeRatesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B990B52181C1430099930C /* ExchangeRatesRepository.swift */; };
-		B4B990B82181C51B0099930C /* DateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B990B72181C51B0099930C /* DateProvider.swift */; };
 		B4B990BE2181CE860099930C /* ExchangeRateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B990BC2181CE860099930C /* ExchangeRateTableViewCell.swift */; };
 		B4B990BF2181CE860099930C /* ExchangeRateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4B990BD2181CE860099930C /* ExchangeRateTableViewCell.xib */; };
 		B4B990C12181D0260099930C /* NumberFormatterCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B990C02181D0260099930C /* NumberFormatterCache.swift */; };
@@ -114,7 +113,6 @@
 		B4B990B12181BF010099930C /* ExchangeRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRate.swift; sourceTree = "<group>"; };
 		B4B990B32181BF800099930C /* DateFormatterCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterCache.swift; sourceTree = "<group>"; };
 		B4B990B52181C1430099930C /* ExchangeRatesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRatesRepository.swift; sourceTree = "<group>"; };
-		B4B990B72181C51B0099930C /* DateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateProvider.swift; sourceTree = "<group>"; };
 		B4B990BC2181CE860099930C /* ExchangeRateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateTableViewCell.swift; sourceTree = "<group>"; };
 		B4B990BD2181CE860099930C /* ExchangeRateTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExchangeRateTableViewCell.xib; sourceTree = "<group>"; };
 		B4B990C02181D0260099930C /* NumberFormatterCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFormatterCache.swift; sourceTree = "<group>"; };
@@ -320,7 +318,6 @@
 			children = (
 				B4AED236218083860082F40A /* LocalizationUtils.swift */,
 				B4AED24321808C0A0082F40A /* Coordinator.swift */,
-				B4B990B72181C51B0099930C /* DateProvider.swift */,
 				B4B990B32181BF800099930C /* DateFormatterCache.swift */,
 				B4B990C02181D0260099930C /* NumberFormatterCache.swift */,
 				B4FC701621837EE00049FD75 /* Date+Days.swift */,
@@ -624,7 +621,6 @@
 				B4AED24421808C0A0082F40A /* Coordinator.swift in Sources */,
 				B4B990B42181BF800099930C /* DateFormatterCache.swift in Sources */,
 				B4FC701321836DAC0049FD75 /* FixerApiCommons.swift in Sources */,
-				B4B990B82181C51B0099930C /* DateProvider.swift in Sources */,
 				B45DD670218336F20078D10C /* RefreshControlContainer.swift in Sources */,
 				B4C0696721847B5C004874BD /* ExchangeRateDb+Convertation.swift in Sources */,
 				B4FC701721837EE00049FD75 /* Date+Days.swift in Sources */,
